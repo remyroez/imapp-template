@@ -1,5 +1,5 @@
 
-set(IMAPP_SOURCE_DIR ${CMAKE_SOURCE_DIR}/..)
+set(IMAPP_SOURCE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/imapp)
 set(IMAPP_INCLUDE_DIR ${IMAPP_SOURCE_DIR})
 
 # Standalone application starter kit
