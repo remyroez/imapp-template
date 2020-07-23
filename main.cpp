@@ -7,17 +7,31 @@
 // Main code
 int main(int, char**)
 {
+    ImGuiConfigFlags flags = 0;
+    flags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    //flags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+#ifdef IMGUI_HAS_DOCK
+    flags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+#endif
+
+#ifdef IMGUI_HAS_VIEWPORT
+    flags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+#endif
+
     // Setup Platform/Renderer/Dear ImGui
-    if (!ImApp::BeginApplication("imapp example"))
+    if (!ImApp::BeginApplication("imapp example", ImVec2(0, 0), flags))
     {
         return -1;
     }
 
-    // Enable Keyboard/Gamepad Controls
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    
+
+#ifdef IMGUI_HAS_VIEWPORT
+    //io.ConfigViewportsNoAutoMerge = true;
+    //io.ConfigViewportsNoTaskBarIcon = true;
+#endif
+
     // Load Fonts
     // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
     // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
@@ -36,6 +50,16 @@ int main(int, char**)
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsClassic();
+
+#ifdef IMGUI_HAS_VIEWPORT
+    // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+    ImGuiStyle& style = ImGui::GetStyle();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        style.WindowRounding = 0.0f;
+        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    }
+#endif
 
     // Our state
     bool show_demo_window = true;

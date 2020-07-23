@@ -26,17 +26,22 @@ void main_loop(void*);
 // Main code
 int main(int, char**)
 {
+    ImGuiConfigFlags flags = 0;
+    flags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    //flags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+#ifdef IMGUI_HAS_DOCK
+    flags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+#endif
+
     // Setup Platform/Renderer/Dear ImGui
-    if (!ImApp::BeginApplication("imapp Emscripten example"))
+    if (!ImApp::BeginApplication("imapp Emscripten example", ImVec2(0, 0), flags))
     {
         return -1;
     }
 
-    // Enable Keyboard/Gamepad Controls
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    
+
     // Load Fonts
     // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
     // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
