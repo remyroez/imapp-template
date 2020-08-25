@@ -11,7 +11,9 @@ target_sources(gl3w PRIVATE
 target_include_directories(gl3w PUBLIC ${GL3W_INCLUDE_DIR})
 target_link_libraries(gl3w ${CMAKE_DL_LIBS})
 
-find_package(OpenGL REQUIRED)
-target_link_libraries(gl3w OpenGL::GLX)
+if(UNIX AND NOT APPLE)
+    find_package(OpenGL REQUIRED)
+    target_link_libraries(gl3w OpenGL::GLX)
+endif()
 
 set(GL3W_LIBRARIES gl3w)
